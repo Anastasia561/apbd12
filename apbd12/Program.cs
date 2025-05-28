@@ -12,6 +12,7 @@ builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseSqlServer(connectionString);
 });
 builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 var app = builder.Build();
 
