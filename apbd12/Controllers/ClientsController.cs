@@ -17,17 +17,17 @@ public class ClientsController : ControllerBase
     [HttpDelete("{idClient}")]
     public async Task<IActionResult> DeleteClient(int idClient, CancellationToken token)
     {
-        if (!await _clientService.ClientExists(token, idClient))
+        if (!await _clientService.ClientExistsByIdAsync(token, idClient))
         {
             return NotFound("Client not found");
         }
 
-        if (await _clientService.HasTrips(token, idClient))
+        if (await _clientService.HasTripsAsync(token, idClient))
         {
             return BadRequest("Client has assigned trips");
         }
 
-        await _clientService.DeleteClient(token, idClient);
+        await _clientService.DeleteClientAsync(idClient, token);
         return Ok();
     }
 }

@@ -53,4 +53,16 @@ public class TripService : ITripService
             PageSize = pageSize
         };
     }
+
+    public async Task<bool> TripExistsAsync(int idTrip, CancellationToken token)
+    {
+        var result = await _context.Trips.AnyAsync(t => t.IdTrip == idTrip, token);
+        return result;
+    }
+
+    public async Task<bool> TripIsFutureAsync(int idTrip, CancellationToken token)
+    {
+        var result = await _context.Trips.Where(t => t.IdTrip == idTrip).FirstOrDefaultAsync(token);
+        return result.DateFrom > DateTime.Now;
+    }
 }
